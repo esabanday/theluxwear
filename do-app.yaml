@@ -1,0 +1,27 @@
+name: luxwear-site
+services:
+  - name: web
+    dockerfile_path: Dockerfile
+    github:
+      repo: your-org/luxwear-site
+      branch: main
+    http_port: 3000
+    envs:
+      - key: SHOPIFY_STORE_DOMAIN
+        scope: RUN_AND_BUILD_TIME
+      - key: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+      - key: SHOPIFY_API_VERSION
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_SITE_URL
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_ANALYTICS_PROVIDER
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_ANALYTICS_ID
+        scope: RUN_AND_BUILD_TIME
+      - key: NEWSLETTER_WEBHOOK_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+    routes:
+      - path: /
