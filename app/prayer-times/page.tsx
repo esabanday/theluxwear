@@ -1,6 +1,9 @@
 import SectionHeading from '@/components/section-heading';
 import { formatTiming, getPrayerTimesForToday } from '@/lib/prayer-times';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const PRAYER_ORDER = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'] as const;
 
 export default async function PrayerTimesPage() {
