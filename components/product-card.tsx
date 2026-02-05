@@ -5,14 +5,17 @@ import { formatMoney } from '@/lib/utils';
 
 export default function ProductCard({ product }: { product: Product }) {
   const price = product.priceRange.minVariantPrice;
+  const mediaEdges = product.media?.edges ?? [];
+  const mediaImageNode = mediaEdges.find((edge) => edge.node.__typename === 'MediaImage')?.node;
+  const fallbackImage = product.featuredImage ?? mediaImageNode?.image ?? null;
 
   return (
     <Link href={`/products/${product.handle}`} className="group space-y-4">
       <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-white shadow-soft">
-        {product.featuredImage ? (
+        {fallbackImage ? (
           <Image
-            src={product.featuredImage.url}
-            alt={product.featuredImage.altText || product.title}
+            src={fallbackImage.url}
+            alt={fallbackImage.altText || product.title}
             fill
             className="object-cover transition duration-500 group-hover:scale-105"
           />

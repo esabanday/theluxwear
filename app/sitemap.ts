@@ -5,7 +5,17 @@ export default async function sitemap() {
   const products = await getAllProducts();
   const collections = await getCollections();
 
-  const pages = ['/', '/shop', '/about', '/contact', '/cart', '/policies/shipping-returns', '/policies/privacy', '/policies/terms'];
+  const pages = [
+    '/',
+    '/shop',
+    '/about',
+    '/contact',
+    '/cart',
+    '/prayer-times',
+    '/policies/shipping-returns',
+    '/policies/privacy',
+    '/policies/terms'
+  ];
 
   return [
     ...pages.map((path) => ({ url: `${siteUrl}${path}`, lastModified: new Date() })),

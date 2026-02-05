@@ -59,6 +59,17 @@ export type Product = {
   tags: string[];
   availableForSale: boolean;
   featuredImage?: { url: string; altText?: string | null } | null;
+  media?: {
+    edges: {
+      node: {
+        __typename: 'MediaImage' | 'Video' | 'ExternalVideo' | 'Model3d';
+        image?: { url: string; altText?: string | null } | null;
+        previewImage?: { url: string; altText?: string | null } | null;
+        sources?: { url: string; mimeType: string }[];
+        embedUrl?: string;
+      };
+    }[];
+  };
   images: { edges: { node: { url: string; altText?: string | null } }[] };
   options: { id: string; name: string; values: string[] }[];
   variants: {
@@ -100,6 +111,24 @@ export async function getFeaturedProducts() {
             productType
             tags
             featuredImage { url altText }
+            media(first: 4) {
+              edges {
+                node {
+                  __typename
+                  ... on MediaImage {
+                    image { url altText }
+                  }
+                  ... on Video {
+                    sources { url mimeType }
+                    previewImage { url altText }
+                  }
+                  ... on ExternalVideo {
+                    embedUrl
+                    previewImage { url altText }
+                  }
+                }
+              }
+            }
             priceRange { minVariantPrice { amount currencyCode } maxVariantPrice { amount currencyCode } }
           }
         }
@@ -124,6 +153,24 @@ export async function getAllProducts() {
             productType
             tags
             featuredImage { url altText }
+            media(first: 4) {
+              edges {
+                node {
+                  __typename
+                  ... on MediaImage {
+                    image { url altText }
+                  }
+                  ... on Video {
+                    sources { url mimeType }
+                    previewImage { url altText }
+                  }
+                  ... on ExternalVideo {
+                    embedUrl
+                    previewImage { url altText }
+                  }
+                }
+              }
+            }
             options { id name values }
             variants(first: 50) {
               edges {
@@ -223,6 +270,24 @@ export async function getCollectionByHandle(handle: string) {
               productType
               tags
               featuredImage { url altText }
+              media(first: 4) {
+                edges {
+                  node {
+                    __typename
+                    ... on MediaImage {
+                      image { url altText }
+                    }
+                    ... on Video {
+                      sources { url mimeType }
+                      previewImage { url altText }
+                    }
+                    ... on ExternalVideo {
+                      embedUrl
+                      previewImage { url altText }
+                    }
+                  }
+                }
+              }
               priceRange { minVariantPrice { amount currencyCode } maxVariantPrice { amount currencyCode } }
             }
           }

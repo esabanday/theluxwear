@@ -46,6 +46,36 @@ Edit `do-app.yaml` with your GitHub repo and use it in App Platform.
 ## Checkout Flow
 Cart is created and managed via Shopify Cart API. Checkout button redirects to Shopify-hosted checkout.
 
+## Prayer Times
+Set these env vars to show daily prayer times:
+- `PRAYER_LATITUDE`
+- `PRAYER_LONGITUDE`
+- `PRAYER_METHOD` (AlAdhan calculation method id)
+- `PRAYER_TIMEZONE` (IANA timezone, e.g. `America/New_York`)
+- `PRAYER_API_BASE` (comma-separated list for fallback)
+- `PRAYER_STATE_PATH` (where to store daily cache, default `/tmp/prayer-times.json`)
+- `PRAYER_CRON_SECRET` (shared secret for the daily webhook)
+- `VOICEMONKEY_TOKEN`
+- `VOICEMONKEY_DEVICE`
+- `VOICEMONKEY_FLOW` (optional, for flow trigger)
+- `VOICEMONKEY_MODE` (`announcement` or `trigger`)
+
+### Prayer-Time Alexa Trigger (Voice Monkey)
+The API route `POST /api/prayer-times/notify` fetches daily prayer times, caches them, and only triggers Voice Monkey at the exact prayer times.
+Schedule it every minute so it fires on time:
+
+```
+CRON_TZ=America/New_York
+* * * * * curl -fsS -X POST -H "X-Cron-Secret: YOUR_SECRET" http://127.0.0.1:3000/api/prayer-times/notify >/dev/null 2>&1
+```
+
+For testing, you can force a send by calling:
+```
+curl -fsS -X POST "http://127.0.0.1:3000/api/prayer-times/notify?force=1"
+```
+
+To use Voice Monkey Flows instead of announcements, set `VOICEMONKEY_MODE=flow` and `VOICEMONKEY_FLOW=YOUR_FLOW_ID`.
+
 ## Newsletter
 Newsletter submit posts to `NEWSLETTER_WEBHOOK_URL`. Use any email provider webhook (ConvertKit, Mailchimp, Klaviyo, etc.).
 

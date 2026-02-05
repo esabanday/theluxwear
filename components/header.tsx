@@ -9,6 +9,7 @@ const links = [
   { href: '/shop', label: 'Shop' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
+  { href: '/prayer-times', label: 'Prayer Times' },
   { href: '/policies/shipping-returns', label: 'Shipping & Returns' }
 ];
 

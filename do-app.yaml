@@ -3,7 +3,7 @@ services:
   - name: web
     dockerfile_path: Dockerfile
     github:
-      repo: your-org/luxwear-site
+      repo: esabanday/theluxwear
       branch: main
     http_port: 3000
     envs:
